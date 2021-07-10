@@ -1,11 +1,8 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import useGetCurrentPath from '../hooks/useGetCurrentPath'
 
 const Sidebar = () => {
-  const router = useRouter()
-  const currentPathName = useMemo(() => router.pathname, [router.pathname])
-
+  const [currentPathName] = useGetCurrentPath()
   return (
     <aside className="bg-gray-800 sm:w-1/3 xl:w-1/5 sm:min-h-screen p-5">
       <div>
