@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 
-const Signin = () => {
+const SignIn = () => {
   return (
     <Layout>
       <h1 className="text-center text-2xl text-white font-light">Sign In</h1>
@@ -38,7 +38,7 @@ const Signin = () => {
             </div>
             <input
               type="submit"
-              className="bg-gray-800 w-full mt-5 p-2 text-white uppercase hover:bg-gray-900"
+              className="bg-gray-800 w-full mt-5 p-2 rounded text-white uppercase hover:bg-gray-900"
               value="Iniciar Sesión"
             />
           </form>
@@ -48,4 +48,4 @@ const Signin = () => {
   )
 }
 
-export default Signin
+export default SignIn
