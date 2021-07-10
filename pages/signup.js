@@ -6,6 +6,11 @@ import Error from '../components/Error'
 
 const SignUp = () => {
 
+  const _handleCreateUser = (user) => {
+    console.log("🚀 ~ SignUp ~ user", user)
+
+  }
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -35,11 +40,6 @@ const SignUp = () => {
     }),
     onSubmit: _handleCreateUser
   })
-
-  const _handleCreateUser = (user) => {
-    console.log("🚀 ~ SignUp ~ user", user)
-
-  }
 
   return (
     <Layout>
