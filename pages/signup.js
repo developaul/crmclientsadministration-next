@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
 
@@ -24,7 +24,7 @@ const SignUp = () => {
       setTimeout(() => {
         setMessage(null)
         router.push('/signin')
-      }, 1500)
+      }, 3000)
     } catch (error) {
       setMessage(error.message)
       setTimeout(() => setMessage(null), 3000)
@@ -35,7 +35,7 @@ const SignUp = () => {
 
   return (
     <Layout>
-      {message && <FeedbackMessage />}
+      {message && <FeedbackMessage message={message} />}
       <h1 className="text-center text-2xl text-white font-light">Sign Up</h1>
       <div className="flex justify-center mt-5">
         <div className="w-full max-w-sm">

@@ -7,3 +7,11 @@ export const MUTATION_CREATE_USER = gql`
     }
   }
 `
+
+export const MUTATION_AUTHENTICATE_USER = gql`
+mutation authenticateUser($input: AuthenticateInput!) {
+  authenticateUser(input: $input) {
+    token
+  }
+}
+`
