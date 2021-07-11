@@ -20,6 +20,7 @@ const Layout = ({ children }) => {
         <link
           href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
           rel="stylesheet" />
+        <title>CRM - Administración de Clientes</title>
       </Head>
 
       {isAuthPage ? (
