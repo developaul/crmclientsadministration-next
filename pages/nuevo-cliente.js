@@ -1,22 +1,48 @@
-import { useCallback } from 'react'
+import { useMutation } from '@apollo/client'
+import { useCallback, useState } from 'react'
+import { useRouter } from 'next/router'
 import * as Yup from 'yup'
-import ErrorMessage from '../components/ErrorMessage'
 
+import FeedbackMessage from '../components/FeedbackMessage'
+import ErrorMessage from '../components/ErrorMessage'
 import Layout from '../components/Layout'
 import useValidations from '../hooks/useValidations'
+import { GET_CLIENTS_BY_SELLER, MUTATION_CREATE_CLIENTE } from '../apollo/types'
 
 const NewClient = () => {
+  const [createClient] = useMutation(MUTATION_CREATE_CLIENTE, {
+    update(cache, { data: { createClient: client } }) {
+      const { getClientsBySeller } = cache.readQuery({ query: GET_CLIENTS_BY_SELLER })
+      cache.writeQuery({
+        query: GET_CLIENTS_BY_SELLER,
+        data: {
+          getClientsBySeller: [
+            ...getClientsBySeller,
+            client
+          ]
+        }
+      })
+    }
+  })
+  const router = useRouter()
+  const [message, setMessage] = useState(null)
 
-  const _handleCreateClient = useCallback((input) => {
-    console.log("🚀 ~ const_handleCreateClient=useCallback ~ input", input)
-
-  }, [])
+  const _handleCreateClient = useCallback(async input => {
+    try {
+      await createClient({ variables: { input } })
+      router.push('/')
+    } catch (error) {
+      setMessage(error.message)
+      setTimeout(() => setMessage(null), 3000)
+    }
+  }, [createClient, router])
 
   const [formik] = useValidations(initialValues, validationSchema, _handleCreateClient)
 
   return (
     <Layout>
       <h1 className="text-2xl text-gray-800 font-light" >Nuevo Cliente</h1>
+      {message && <FeedbackMessage message={message} />}
 
       <div className="flex justify-center mt-5">
         <div className="w-full max-w-lg">

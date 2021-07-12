@@ -36,3 +36,16 @@ query getUser {
   }
 }
 `
+
+export const MUTATION_CREATE_CLIENTE = gql`
+mutation createClient($input: ClientInput!) {
+  createClient(input: $input) {
+    id
+    name
+    lastName
+    company
+    email
+    phone
+  }
+}
+`
