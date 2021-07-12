@@ -8,7 +8,7 @@ const FeedbackMessage = ({ message }) => (
   </div>
 )
 
-Error.propTypes = {
+FeedbackMessage.propTypes = {
   message: PropTypes.string.isRequired
 }
 
