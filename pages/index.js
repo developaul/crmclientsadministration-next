@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { GET_CLIENTS_BY_SELLER } from '../apollo/types'
@@ -17,6 +18,13 @@ const Home = () => {
   return (
     <Layout>
       <h1 className="text-2xl text-gray-800 font-light" >Clientes</h1>
+      <Link href="nuevo-cliente">
+        <a
+          className="bg-blue-800 py-2 px-5 my-3 inline-block text-white rounded text-sm hover:bg-gray-800 uppercase font-bold"
+        >
+          Nuevo Cliente
+        </a>
+      </Link>
 
       <table className="table-auto shadow-md mt-10 w-full w-lg">
         <thead className="bg-gray-800">
