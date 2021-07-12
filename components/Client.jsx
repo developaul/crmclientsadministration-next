@@ -1,14 +1,39 @@
 // import { memo } from 'react'
+import { useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2'
+
+import { MUTATION_DELETE_CLIENT } from '../apollo/types';
 
 const Client = ({ id, name, lastName, company, email }) => {
-  console.log("🚀 ~ Client ~ name", name)
+  const [deleteClient] = useMutation(MUTATION_DELETE_CLIENT)
 
-  const _handleDeleteClient = useCallback(() => {
-    console.log("🚀 ~ Client ~ id", id)
+  const _handleDeleteClient = useCallback(async () => {
+    const result = await Swal.fire({
+      title: '¿Deseas eliminar a este cliente?',
+      text: "Esta acción no se puede deshacer",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText: 'No, Cancelar'
+    })
 
-  }, [id])
+    if (result.isConfirmed) {
+      try {
+        const { data: { deleteClient: message } } = await deleteClient({ variables: { id } })
+        Swal.fire(
+          'Eliminado!',
+          message,
+          'success'
+        )
+      } catch (error) {
+        console.error(error.message)
+      }
+    }
+  }, [deleteClient, id])
 
   return (
     <tr>
