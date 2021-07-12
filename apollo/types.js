@@ -15,3 +15,15 @@ mutation authenticateUser($input: AuthenticateInput!) {
   }
 }
 `
+
+export const GET_CLIENTS_BY_SELLER = gql`
+query getClientsBySeller {
+  getClientsBySeller {
+    id
+    name
+    lastName
+    company
+    email
+  }
+}
+`
