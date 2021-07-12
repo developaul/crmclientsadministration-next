@@ -1,13 +1,26 @@
-// import { memo } from 'react'
 import { useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 import Swal from 'sweetalert2'
 
-import { MUTATION_DELETE_CLIENT } from '../apollo/types';
+import {
+  GET_CLIENTS_BY_SELLER,
+  MUTATION_DELETE_CLIENT
+} from '../apollo/types';
 
 const Client = ({ id, name, lastName, company, email }) => {
-  const [deleteClient] = useMutation(MUTATION_DELETE_CLIENT)
+  const [deleteClient] = useMutation(MUTATION_DELETE_CLIENT, {
+    update(cache) {
+      const { getClientsBySeller } = cache.readQuery({ query: GET_CLIENTS_BY_SELLER })
+
+      cache.writeQuery({
+        query: GET_CLIENTS_BY_SELLER,
+        data: {
+          getClientsBySeller: getClientsBySeller.filter(client => client.id !== id)
+        }
+      })
+    }
+  })
 
   const _handleDeleteClient = useCallback(async () => {
     const result = await Swal.fire({
@@ -63,4 +76,4 @@ Client.propTypes = {
   email: PropTypes.string.isRequired,
 }
 
-export default Client
+export default memo(Client)

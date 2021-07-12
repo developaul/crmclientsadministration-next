@@ -7,7 +7,7 @@ import { GET_CLIENTS_BY_SELLER } from '../apollo/types'
 
 import Layout from '../components/Layout'
 
-const Home = () => {
+const Index = () => {
   const { data, loading } = useQuery(GET_CLIENTS_BY_SELLER)
   const router = useRouter()
 
@@ -47,4 +47,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Index
