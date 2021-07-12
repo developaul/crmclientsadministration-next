@@ -105,7 +105,7 @@ const validationSchema = Yup.object({
   email: Yup
     .string()
     .trim()
-    .email('El no es válido')
+    .email('El email no es válido')
     .required('El email no puede ir vacio'),
   password: Yup
     .string()

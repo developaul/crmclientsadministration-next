@@ -27,3 +27,12 @@ query getClientsBySeller {
   }
 }
 `
+
+export const GET_USER = gql`
+query getUser {
+  getUser {
+    name
+    lastName
+  }
+}
+`

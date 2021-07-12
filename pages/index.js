@@ -1,14 +1,18 @@
 import { useQuery } from '@apollo/client'
+import { useRouter } from 'next/router'
 import { GET_CLIENTS_BY_SELLER } from '../apollo/types'
 
 import Layout from '../components/Layout'
 
 const Home = () => {
-  const { data, loading, error } = useQuery(GET_CLIENTS_BY_SELLER)
-  console.log("🚀 ~ Home ~ loading", loading)
-  console.log("🚀 ~ Home ~ data", data)
+  const { data, loading } = useQuery(GET_CLIENTS_BY_SELLER)
+  const router = useRouter()
 
-  if (loading) return <p>Cargando...</p>
+  if (loading) return null
+  if (!data?.getClientsBySeller) {
+    router.push('/signin')
+    return null
+  }
 
   return (
     <Layout>
