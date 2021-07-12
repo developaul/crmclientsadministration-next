@@ -19,7 +19,7 @@ const SignIn = () => {
       setMessage(`Iniciando Sesión...`)
 
       const {
-        data: { authenticateUser: token }
+        data: { authenticateUser: { token } }
       } = await authenticateUser({ variables: { input } })
 
       localStorage.setItem('accessToken', token)

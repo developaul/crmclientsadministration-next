@@ -1,13 +1,27 @@
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
+import { setContext } from 'apollo-link-context'
 import fetch from 'node-fetch'
+
+const httpLink = createHttpLink({
+  fetch,
+  uri: 'http://localhost:4000/'
+})
+
+const authLink = setContext((_, { headers }) => {
+  const accessToken = localStorage.getItem('accessToken')
+  return {
+    headers: {
+      ...headers,
+      authorization: accessToken ? `Bearer ${accessToken}` : ''
+    }
+  }
+})
+
 
 const client = new ApolloClient({
   connectToDevTools: true,
   cache: new InMemoryCache(),
-  link: new HttpLink({
-    fetch,
-    uri: 'http://localhost:4000/'
-  })
+  link: authLink.concat(httpLink)
 })
 
 export default client
