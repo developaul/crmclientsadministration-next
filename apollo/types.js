@@ -67,3 +67,16 @@ query getClient($id: ID!) {
   }
 }
 `
+
+export const MUTATION_UPDATE_CLIENT = gql`
+mutation updateClient($id: ID! $input: ClientInput!) {
+  updateClient(id: $id, input: $input) {
+    id
+    name
+    lastName
+    company
+    email
+    seller
+  }
+}
+`

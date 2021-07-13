@@ -2,14 +2,14 @@ import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 
+import Layout from '../components/Layout'
 import Client from '../components/Client'
 import { GET_CLIENTS_BY_SELLER } from '../apollo/types'
 
-import Layout from '../components/Layout'
 
 const Index = () => {
-  const { data, loading } = useQuery(GET_CLIENTS_BY_SELLER)
   const router = useRouter()
+  const { data, loading } = useQuery(GET_CLIENTS_BY_SELLER)
 
   if (loading) return null
   if (!data?.getClientsBySeller) {
