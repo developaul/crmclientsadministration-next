@@ -80,3 +80,20 @@ mutation updateClient($id: ID! $input: ClientInput!) {
   }
 }
 `
+
+export const GET_PRODUCTS = gql`
+query getProduct {
+  getProducts {
+    id
+    name
+    stock
+    price
+  }
+}
+`
+
+export const MUTATION_DELETE_PRODUCT = gql`
+mutation deleteProduct($id: ID!) {
+  deleteProduct(id: $id)
+}
+`

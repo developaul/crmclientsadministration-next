@@ -1,23 +1,18 @@
-import { useMutation } from '@apollo/client';
-import Router from 'next/router'
-import { useCallback, memo } from 'react';
+import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
-import Swal from 'sweetalert2'
+import { useCallback, memo } from 'react';
+import { useMutation } from '@apollo/client';
 
-import {
-  GET_CLIENTS_BY_SELLER,
-  MUTATION_DELETE_CLIENT
-} from '../apollo/types';
+import { GET_PRODUCTS, MUTATION_DELETE_PRODUCT } from '../apollo/types';
 
-const Client = ({ id, name, lastName, company, email }) => {
-  const [deleteClient] = useMutation(MUTATION_DELETE_CLIENT, {
-    update(cache) {
-      const { getClientsBySeller } = cache.readQuery({ query: GET_CLIENTS_BY_SELLER })
-
+const Product = ({ id, name, stock, price }) => {
+  const [deleteProduct] = useMutation(MUTATION_DELETE_PRODUCT, {
+    update(cache,) {
+      const { getProducts } = cache.readQuery({ query: GET_PRODUCTS })
       cache.writeQuery({
-        query: GET_CLIENTS_BY_SELLER,
+        query: GET_PRODUCTS,
         data: {
-          getClientsBySeller: getClientsBySeller.filter(client => client.id !== id)
+          getProducts: getProducts.filter(product => product.id !== id)
         }
       })
     }
@@ -25,7 +20,7 @@ const Client = ({ id, name, lastName, company, email }) => {
 
   const _handleDeleteClient = useCallback(async () => {
     const result = await Swal.fire({
-      title: '¿Deseas eliminar a este cliente?',
+      title: '¿Deseas eliminar a este producto?',
       text: "Esta acción no se puede deshacer",
       icon: 'warning',
       showCancelButton: true,
@@ -37,7 +32,7 @@ const Client = ({ id, name, lastName, company, email }) => {
 
     if (result.isConfirmed) {
       try {
-        const { data: { deleteClient: message } } = await deleteClient({ variables: { id } })
+        const { data: { deleteProduct: message } } = await deleteProduct({ variables: { id } })
         Swal.fire(
           'Eliminado!',
           message,
@@ -51,20 +46,20 @@ const Client = ({ id, name, lastName, company, email }) => {
         )
       }
     }
-  }, [deleteClient, id])
+  }, [id, deleteProduct])
 
   const _handleEditClient = useCallback(() => {
     Router.push({
-      pathname: `/editar-cliente/[id]`,
+      pathname: `/editar-producto/[id]`,
       query: { id }
     })
   }, [id])
 
   return (
     <tr>
-      <td className="border px-4 py-2">{name} {lastName}</td>
-      <td className="border px-4 py-2">{company}</td>
-      <td className="border px-4 py-2">{email}</td>
+      <td className="border px-4 py-2">{name}</td>
+      <td className="border px-4 py-2">{stock} Piezas</td>
+      <td className="border px-4 py-2">$ {price}</td>
       <td className="border px-4 py-2">
         <button
           type="button"
@@ -89,12 +84,11 @@ const Client = ({ id, name, lastName, company, email }) => {
   )
 }
 
-Client.propTypes = {
+Product.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  stock: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired
 }
 
-export default memo(Client)
+export default memo(Product)
