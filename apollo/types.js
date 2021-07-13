@@ -55,3 +55,15 @@ mutation deleteClient($id: ID!) {
   deleteClient(id: $id)
 } 
 `
+
+export const GET_CLIENT = gql`
+query getClient($id: ID!) {
+  getClient(id: $id) {
+    name
+    lastName
+    company
+    email
+    phone 
+  }
+}
+`

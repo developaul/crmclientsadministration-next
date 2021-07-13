@@ -1,9 +1,25 @@
+import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { GET_CLIENT } from '../../apollo/types'
 import Layout from '../../components/Layout'
 
 const EditClient = () => {
   const router = useRouter()
   const { query: { id } } = router
+  const { data, loading } = useQuery(GET_CLIENT, { variables: { id } })
+
+  if (loading) return null
+
+  const {
+    getClient: {
+      name,
+      lastName,
+      company,
+      email,
+      phone
+    }
+  } = data
+
 
   return (
     <Layout>
@@ -27,9 +43,9 @@ const EditClient = () => {
                 id="name"
                 type="text"
                 placeholder="Nombre Cliente"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.name}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.name}
               />
             </div>
             {/* {formik.touched.name && formik.errors.name && <ErrorMessage message={formik.errors.name} />} */}
@@ -47,9 +63,9 @@ const EditClient = () => {
                 id="lastName"
                 type="text"
                 placeholder="Apellido Cliente"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.lastName}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.lastName}
               />
             </div>
             {/* {formik.touched.lastName && formik.errors.lastName && <ErrorMessage message={formik.errors.lastName} />} */}
@@ -66,9 +82,9 @@ const EditClient = () => {
                 id="company"
                 type="company"
                 placeholder="Empresa Cliente"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.company}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.company}
               />
             </div>
             {/* {formik.touched.company && formik.errors.company && <ErrorMessage message={formik.errors.company} />} */}
@@ -86,9 +102,9 @@ const EditClient = () => {
                 id="email"
                 type="email"
                 placeholder="Email Cliente"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.email}
               />
             </div>
             {/* {formik.touched.email && formik.errors.email && <ErrorMessage message={formik.errors.email} />} */}
@@ -105,9 +121,9 @@ const EditClient = () => {
                 id="phone"
                 type="tel"
                 placeholder="Teléfono Cliente"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.phone}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // value={formik.values.phone}
               />
             </div>
 
