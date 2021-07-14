@@ -1,6 +1,6 @@
 import {
   SELECT_CLIENT,
-  SELECT_PRODUCT,
+  SELECT_PRODUCTS,
   QUANTITY_PRODUCTS
 } from '../types'
 
@@ -10,6 +10,12 @@ const orderReducer = (state, action) => {
       return {
         ...state,
         client: action.payload
+      }
+
+    case SELECT_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload
       }
 
     default:
