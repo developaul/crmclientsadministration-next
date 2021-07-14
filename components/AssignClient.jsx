@@ -1,14 +1,13 @@
 import Select from 'react-select'
+import { useContext } from 'react'
 import { useQuery } from '@apollo/client'
 
 import { GET_CLIENTS_BY_SELLER } from '../apollo/types'
+import OrderContext from '../contexts/order/OrderContext'
 
 const AssignClient = () => {
   const { data, loading } = useQuery(GET_CLIENTS_BY_SELLER)
-
-  const _handleChange = (...rest) => {
-    console.log("🚀 ~ NewOrder ~ rest", rest)
-  }
+  const { _handleAddClient } = useContext(OrderContext)
 
   if (loading) return null
   const { getClientsBySeller: clients } = data
@@ -23,7 +22,7 @@ const AssignClient = () => {
       <Select
         className="mt-3"
         options={clients}
-        onChange={_handleChange}
+        onChange={_handleAddClient}
         getOptionValue={({ id }) => id}
         getOptionLabel={({ name }) => name}
         placeholder="Busque o Seleccione el Cliente"

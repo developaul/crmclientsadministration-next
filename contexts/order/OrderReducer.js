@@ -7,8 +7,10 @@ import {
 const orderReducer = (state, action) => {
   switch (action.type) {
     case SELECT_CLIENT:
-
-      return state
+      return {
+        ...state,
+        client: action.payload
+      }
 
     default:
       return state

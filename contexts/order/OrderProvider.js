@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useCallback } from 'react'
 
 import OrderContext from './OrderContext'
 import orderReducer from './OrderReducer'
@@ -15,13 +15,13 @@ const initialState = {
 }
 
 const OrderProvider = ({ children }) => {
-
   const [state, dispatch] = useReducer(orderReducer, initialState)
+  const _handleAddClient = useCallback(client => dispatch({ type: SELECT_CLIENT, payload: client }), [])
 
   return (
     <OrderContext.Provider
       value={{
-
+        _handleAddClient
       }}
     >
       {children}
