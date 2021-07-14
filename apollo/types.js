@@ -108,3 +108,24 @@ mutation createProduct($input: ProductInput!) {
   }
 }
 `
+
+export const GET_PRODUCT = gql`
+query getProduct($id: ID!) {
+  getProduct(id: $id) {
+    name
+    stock
+    price
+  }
+}
+`
+
+export const MUTATION_UPDATE_PRODUCT = gql`
+mutation updateProduct($id: ID!, $input: ProductInput) {
+  updateProduct(id: $id, input: $input) {
+    id
+    name
+    stock
+    price
+  }
+}
+`

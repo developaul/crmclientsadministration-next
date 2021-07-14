@@ -1,9 +1,13 @@
-import Swal from 'sweetalert2';
-import PropTypes from 'prop-types';
-import { useCallback, memo } from 'react';
-import { useMutation } from '@apollo/client';
+import Swal from 'sweetalert2'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import { useCallback, memo } from 'react'
+import { useMutation } from '@apollo/client'
 
-import { GET_PRODUCTS, MUTATION_DELETE_PRODUCT } from '../apollo/types';
+import {
+  GET_PRODUCTS,
+  MUTATION_DELETE_PRODUCT
+} from '../apollo/types'
 
 const Product = ({ id, name, stock, price }) => {
   const [deleteProduct] = useMutation(MUTATION_DELETE_PRODUCT, {

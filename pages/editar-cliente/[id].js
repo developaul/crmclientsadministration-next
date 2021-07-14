@@ -94,7 +94,7 @@ const EditClient = () => {
                     value={values.lastName}
                   />
                 </div>
-                {touched.lastName && errors.lastName && <ErrorMessage message={rrors.lastName} />}
+                {touched.lastName && errors.lastName && <ErrorMessage message={errors.lastName} />}
 
                 <div className="mb-4">
                   <label
@@ -106,7 +106,7 @@ const EditClient = () => {
                   <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="company"
-                    type="company"
+                    type="text"
                     placeholder="Empresa Cliente"
                     onChange={handleChange}
                     onBlur={handleBlur}
