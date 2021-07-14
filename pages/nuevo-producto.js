@@ -1,14 +1,31 @@
 import * as Yup from 'yup'
+import Swal from 'sweetalert2'
+import { useCallback } from 'react'
+import { useRouter } from 'next/router'
+import { useMutation } from '@apollo/client'
 
 import Layout from '../components/Layout'
-import useValidations from '../hooks/useValidations'
 import ErrorMessage from '../components/ErrorMessage'
+import useValidations from '../hooks/useValidations'
+import { MUTATION_CREATE_PRODUCT } from '../apollo/types'
 
 const NewProduct = () => {
+  const router = useRouter()
+  const [createProduct] = useMutation(MUTATION_CREATE_PRODUCT)
 
-  const _handleCreateProduct = () => {
-
-  }
+  const _handleCreateProduct = useCallback(async input => {
+    try {
+      await createProduct({ variables: { input } })
+      Swal.fire('Creado', 'Se creó el producto correctamente', 'success')
+      router.push('/productos')
+    } catch (error) {
+      Swal.fire(
+        'Error',
+        error.message,
+        'error'
+      )
+    }
+  }, [createProduct, router])
 
   const [formik] = useValidations(initialValues, validationSchema, _handleCreateProduct)
 

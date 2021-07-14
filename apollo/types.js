@@ -97,3 +97,15 @@ mutation deleteProduct($id: ID!) {
   deleteProduct(id: $id)
 }
 `
+
+export const MUTATION_CREATE_PRODUCT = gql`
+mutation createProduct($input: ProductInput!) {
+  createProduct(input: $input) {
+    id
+    name
+    stock
+    price
+    createdAt
+  }
+}
+`
