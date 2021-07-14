@@ -7,11 +7,24 @@ import { useMutation } from '@apollo/client'
 import Layout from '../components/Layout'
 import ErrorMessage from '../components/ErrorMessage'
 import useValidations from '../hooks/useValidations'
-import { MUTATION_CREATE_PRODUCT } from '../apollo/types'
+import {
+  MUTATION_CREATE_PRODUCT,
+  GET_PRODUCTS
+} from '../apollo/types'
 
 const NewProduct = () => {
   const router = useRouter()
-  const [createProduct] = useMutation(MUTATION_CREATE_PRODUCT)
+  const [createProduct] = useMutation(MUTATION_CREATE_PRODUCT, {
+    update(cache, { data: { createProduct: product } }) {
+      const { getProducts } = cache.readQuery({ query: GET_PRODUCTS })
+      cache.writeQuery({
+        query: GET_PRODUCTS,
+        data: {
+          getProducts: [...getProducts, product]
+        }
+      })
+    }
+  })
 
   const _handleCreateProduct = useCallback(async input => {
     try {

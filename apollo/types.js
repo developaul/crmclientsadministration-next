@@ -105,7 +105,6 @@ mutation createProduct($input: ProductInput!) {
     name
     stock
     price
-    createdAt
   }
 }
 `
