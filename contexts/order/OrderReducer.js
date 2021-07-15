@@ -1,7 +1,7 @@
 import {
   SELECT_CLIENT,
   SELECT_PRODUCTS,
-  QUANTITY_PRODUCTS
+  QUANTITY_PRODUCT
 } from '../types'
 
 const orderReducer = (state, action) => {
@@ -16,6 +16,12 @@ const orderReducer = (state, action) => {
       return {
         ...state,
         products: action.payload
+      }
+
+    case QUANTITY_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map(product => product.id === action.payload.id ? { ...product, quantity: action.payload.quantity } : product)
       }
 
     default:
