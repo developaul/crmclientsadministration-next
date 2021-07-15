@@ -2,7 +2,8 @@ import { useContext } from "react"
 
 import OrderContext from "../contexts/order/OrderContext"
 
-const ResumenProduct = ({ name, price, id }) => {
+const ResumenProduct = ({ name, price, id, quantity }) => {
+  console.log("🚀 ~ ResumenProduct ~ quantity", quantity)
   const { _handleChangeQuantityProduct } = useContext(OrderContext)
 
   return (
@@ -17,6 +18,7 @@ const ResumenProduct = ({ name, price, id }) => {
         placeholder="Cantidad"
         className="shadow apperance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight foucs:outline-none focus:shadow-outline md:ml-4"
         onChange={({ target: { value: quantity } }) => _handleChangeQuantityProduct({ quantity, id })}
+        value={quantity}
       />
     </div>
   )

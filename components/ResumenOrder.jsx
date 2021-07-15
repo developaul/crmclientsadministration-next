@@ -5,7 +5,6 @@ import ResumenProduct from './ResumenProduct'
 
 const ResumenOrder = () => {
   const { products } = useContext(OrderContext)
-  console.log("🚀 ~ ResumenOrder ~ products", products)
 
   return (
     <>
