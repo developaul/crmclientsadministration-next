@@ -5,7 +5,8 @@ import orderReducer from './OrderReducer'
 import {
   SELECT_CLIENT,
   SELECT_PRODUCTS,
-  QUANTITY_PRODUCT
+  QUANTITY_PRODUCT,
+  UPDATE_TOTAL
 } from '../types'
 
 const initialState = {
@@ -15,8 +16,9 @@ const initialState = {
 }
 
 const OrderProvider = ({ children }) => {
-  const [{ products }, dispatch] = useReducer(orderReducer, initialState)
+  const [{ products, total }, dispatch] = useReducer(orderReducer, initialState)
   const _handleAddClient = useCallback(client => dispatch({ type: SELECT_CLIENT, payload: client }), [])
+  const _handleUpdateTotal = useCallback(() => dispatch({ type: UPDATE_TOTAL }), [])
 
   const _handleAddProducts = useCallback(productsToProcess => {
     const newProducts = productsToProcess.map(productToProcess => {
@@ -25,15 +27,24 @@ const OrderProvider = ({ children }) => {
     })
 
     dispatch({ type: SELECT_PRODUCTS, payload: newProducts })
-  }, [products])
 
-  const _handleChangeQuantityProduct = useCallback(payload => dispatch({ type: QUANTITY_PRODUCT, payload }), [])
+    _handleUpdateTotal()
+  }, [_handleUpdateTotal, products])
+
+  const _handleChangeQuantityProduct = useCallback(payload => {
+    dispatch({ type: QUANTITY_PRODUCT, payload })
+
+    _handleUpdateTotal()
+  }, [_handleUpdateTotal])
+
   return (
     <OrderContext.Provider
       value={{
         products,
+        total,
         _handleAddClient,
         _handleAddProducts,
+        _handleUpdateTotal,
         _handleChangeQuantityProduct
       }}
     >

@@ -1,8 +1,8 @@
-import React from 'react'
+import { useContext } from 'react'
+import OrderContext from '../contexts/order/OrderContext'
 
 const ResumenTotal = () => {
-
-  const total = 200
+  const { total } = useContext(OrderContext)
 
   return (
     <div className="flex items-center mt-5 justify-between bg-white p-3 rounded">

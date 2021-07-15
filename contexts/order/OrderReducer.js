@@ -1,7 +1,8 @@
 import {
   SELECT_CLIENT,
   SELECT_PRODUCTS,
-  QUANTITY_PRODUCT
+  QUANTITY_PRODUCT,
+  UPDATE_TOTAL
 } from '../types'
 
 const orderReducer = (state, action) => {
@@ -22,6 +23,12 @@ const orderReducer = (state, action) => {
       return {
         ...state,
         products: state.products.map(product => product.id === action.payload.id ? { ...product, quantity: Number(action.payload.quantity) } : product)
+      }
+
+    case UPDATE_TOTAL:
+      return {
+        ...state,
+        total: state.products.reduce((newTotal, { quantity, price }) => newTotal + (price * quantity), 0)
       }
 
     default:
