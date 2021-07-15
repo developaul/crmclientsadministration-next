@@ -2,6 +2,7 @@
 import Layout from '../components/Layout'
 import ResumenOrder from '../components/ResumenOrder'
 import AssignClient from '../components/AssignClient'
+import ResumenTotal from '../components/ResumenTotal'
 import AssignProduct from '../components/AssignProduct'
 
 
@@ -15,6 +16,14 @@ const NewOrder = () => {
           <AssignClient />
           <AssignProduct />
           <ResumenOrder />
+          <ResumenTotal />
+
+          <button
+            type="button"
+            className={`bg-gray-800 w-full mt-5 p-2 text-white uppercase font-bold hover:bg-gray-900`}
+          >
+            Registrar Pedido
+          </button>
         </div>
       </div>
     </Layout>
