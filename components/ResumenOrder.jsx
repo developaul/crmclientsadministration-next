@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 
 import OrderContext from '../contexts/order/OrderContext'
+import ResumenProduct from './ResumenProduct'
 
 const ResumenOrder = () => {
   const { products } = useContext(OrderContext)
@@ -15,11 +16,12 @@ const ResumenOrder = () => {
       </p>
 
       {(products.length) ?
-        (
-          <>
-            Si hay productos
-          </>
-        )
+        products.map(product => (
+          <ResumenProduct
+            key={product.id}
+            {...product}
+          />
+        ))
         :
         (
           <p
