@@ -28,7 +28,9 @@ const Order = ({
       const { getOrdersBySeller: orders } = cache.readQuery({ query: GET_ORDERS_BY_SELLER })
       cache.writeQuery({
         query: GET_ORDERS_BY_SELLER,
-        data: orders.filter(order => order.id !== id)
+        data: {
+          getOrdersBySeller: orders.filter(order => order.id !== id)
+        }
       })
     }
   })

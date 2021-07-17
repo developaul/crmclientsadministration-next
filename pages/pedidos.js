@@ -11,8 +11,6 @@ const Orders = () => {
 
   if (loading) return null
 
-  console.log(data)
-
   return (
     <Layout>
       <h1 className="text-2xl text-gray-800 font-light" >Pedidos</h1>

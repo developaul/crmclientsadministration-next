@@ -3,7 +3,6 @@ import { useContext } from "react"
 import OrderContext from "../contexts/order/OrderContext"
 
 const ResumenProduct = ({ name, price, id, quantity }) => {
-  console.log("🚀 ~ ResumenProduct ~ quantity", quantity)
   const { _handleChangeQuantityProduct } = useContext(OrderContext)
 
   return (

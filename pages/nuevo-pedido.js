@@ -11,12 +11,16 @@ import AssignProduct from '../components/AssignProduct'
 import OrderContext from '../contexts/order/OrderContext'
 import FeedbackMessage from '../components/FeedbackMessage'
 
-import { MUTATION_CREATE_ORDER } from '../apollo/types'
+import {
+  GET_ORDERS_BY_SELLER,
+  MUTATION_CREATE_ORDER
+} from '../apollo/types'
 
 const NewOrder = () => {
   const router = useRouter()
   const [message, setMessage] = useState(null)
   const [createOrder] = useMutation(MUTATION_CREATE_ORDER)
+
   const { isValidToRegisterOrder, products, client, total } = useContext(OrderContext)
 
   const _handleSanitizationOrder = useCallback(products => products.map(({ __typename, stock, ...product }) => {
@@ -29,6 +33,7 @@ const NewOrder = () => {
   const _handleCreateOrder = useCallback(async () => {
     try {
       const order = _handleSanitizationOrder(products)
+      console.log("🚀 ~ const_handleCreateOrder=useCallback ~ order", order)
 
       await createOrder({
         variables: {
@@ -50,6 +55,7 @@ const NewOrder = () => {
       router.push('/pedidos')
 
     } catch (error) {
+      console.log("🚀 ~ const_handleCreateOrder=useCallback ~ error", error)
       setMessage(error.message)
 
       setTimeout(() => setMessage(null), 3000)
