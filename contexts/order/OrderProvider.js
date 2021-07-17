@@ -16,7 +16,7 @@ const initialState = {
 }
 
 const OrderProvider = ({ children }) => {
-  const [{ products, total }, dispatch] = useReducer(orderReducer, initialState)
+  const [{ client, products, total }, dispatch] = useReducer(orderReducer, initialState)
   const _handleAddClient = useCallback(client => dispatch({ type: SELECT_CLIENT, payload: client }), [])
   const _handleUpdateTotal = useCallback(() => dispatch({ type: UPDATE_TOTAL }), [])
 
@@ -37,6 +37,8 @@ const OrderProvider = ({ children }) => {
     _handleUpdateTotal()
   }, [_handleUpdateTotal])
 
+  const isValidToRegisterOrder = useCallback(() => products.every(product => product.quantity > 0) && total && Object.entries(client).length, [client, products, total])
+
   return (
     <OrderContext.Provider
       value={{
@@ -45,6 +47,7 @@ const OrderProvider = ({ children }) => {
         _handleAddClient,
         _handleAddProducts,
         _handleUpdateTotal,
+        isValidToRegisterOrder,
         _handleChangeQuantityProduct
       }}
     >

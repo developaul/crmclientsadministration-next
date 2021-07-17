@@ -4,9 +4,12 @@ import ResumenOrder from '../components/ResumenOrder'
 import AssignClient from '../components/AssignClient'
 import ResumenTotal from '../components/ResumenTotal'
 import AssignProduct from '../components/AssignProduct'
+import { useContext } from 'react'
+import OrderContext from '../contexts/order/OrderContext'
 
 
 const NewOrder = () => {
+  const { isValidToRegisterOrder} = useContext(OrderContext)
 
   return (
     <Layout>
@@ -20,7 +23,7 @@ const NewOrder = () => {
 
           <button
             type="button"
-            className={`bg-gray-800 w-full mt-5 p-2 text-white uppercase font-bold hover:bg-gray-900`}
+            className={`bg-gray-800 w-full mt-5 p-2 text-white uppercase font-bold hover:bg-gray-900 ${isValidToRegisterOrder() ? '' :  'opacity-50 cursor-not-allowed'}`}
           >
             Registrar Pedido
           </button>
