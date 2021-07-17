@@ -144,3 +144,21 @@ mutation createOrder($input: OrderInput!) {
   }
 }
 `
+
+export const GET_ORDERS_BY_SELLER = gql`
+query getOrdersBySeller {
+  getOrdersBySeller {
+    id
+    client
+    seller
+    total
+    status
+    order {
+      id
+      quantity
+      name
+      price
+    }
+  }
+}
+`
