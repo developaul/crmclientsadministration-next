@@ -5,12 +5,12 @@ import { Formik } from 'formik'
 import Swal from 'sweetalert2'
 import * as Yup from 'yup'
 
-import Layout from '../../../components/Layout'
-import ErrorMessage from '../../../components/ErrorMessage'
+import Layout from '../../components/Layout'
+import ErrorMessage from '../../components/ErrorMessage'
 import {
   GET_PRODUCT,
   MUTATION_UPDATE_PRODUCT
-} from '../../../apollo/types'
+} from '../../apollo/types'
 
 const EditProduct = () => {
   const router = useRouter()

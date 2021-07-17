@@ -149,7 +149,6 @@ export const GET_ORDERS_BY_SELLER = gql`
 query getOrdersBySeller {
   getOrdersBySeller {
     id
-    client
     seller
     total
     status
@@ -158,6 +157,13 @@ query getOrdersBySeller {
       quantity
       name
       price
+    }
+    client {
+      id
+      name
+      lastName
+      email
+      phone
     }
   }
 }
