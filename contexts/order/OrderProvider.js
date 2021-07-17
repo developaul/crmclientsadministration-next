@@ -42,8 +42,9 @@ const OrderProvider = ({ children }) => {
   return (
     <OrderContext.Provider
       value={{
-        products,
         total,
+        client,
+        products,
         _handleAddClient,
         _handleAddProducts,
         _handleUpdateTotal,
