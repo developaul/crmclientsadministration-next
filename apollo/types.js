@@ -134,7 +134,6 @@ export const MUTATION_CREATE_ORDER = gql`
 mutation createOrder($input: OrderInput!) {
   createOrder(input: $input) {
     id
-    client
     total
     seller
     order {
@@ -166,5 +165,20 @@ query getOrdersBySeller {
       phone
     }
   }
+}
+`
+
+export const MUTATION_UPDATE_ORDER = gql`
+mutation updateOrder($id: ID!, $input: OrderInput!) {
+  updateOrder(id: $id, input: $input) {
+    id
+    status    
+  }
+}
+`
+
+export const MUTATION_DELETE_ORDER = gql`
+mutation deleteOrder($id: ID!) {
+  deleteOrder(id: $id)
 }
 `

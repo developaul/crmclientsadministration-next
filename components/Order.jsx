@@ -1,4 +1,12 @@
-import React from 'react'
+import Swal from 'sweetalert2'
+import { useMutation } from '@apollo/client'
+import { useCallback, useMemo, useState } from 'react'
+
+import {
+  GET_ORDERS_BY_SELLER,
+  MUTATION_DELETE_ORDER,
+  MUTATION_UPDATE_ORDER
+} from '../apollo/types'
 
 const Order = ({
   id,
@@ -9,12 +17,76 @@ const Order = ({
     name,
     lastName,
     email,
-    phone
+    phone,
+    id: client
   },
 }) => {
+  const [currentStatus, setCurrentStatus] = useState(status)
+  const [updateOrder] = useMutation(MUTATION_UPDATE_ORDER)
+  const [deleteOrder] = useMutation(MUTATION_DELETE_ORDER, {
+    update(cache) {
+      const { getOrdersBySeller: orders } = cache.readQuery({ query: GET_ORDERS_BY_SELLER })
+      cache.writeQuery({
+        query: GET_ORDERS_BY_SELLER,
+        data: orders.filter(order => order.id !== id)
+      })
+    }
+  })
+
+  const classForCurrentStatus = useMemo(() => {
+    switch (currentStatus) {
+      case 'pending':
+        return 'border-yellow-500'
+      case 'completed':
+        return 'border-green-500'
+      case 'cancelled':
+        return 'border-red-800'
+      default:
+        return ''
+    }
+  }, [currentStatus])
+
+  const _handleChangeStatus = useCallback(async ({ target: { value } }) => {
+    try {
+      setCurrentStatus(value)
+      await updateOrder({ variables: { id, input: { status: value, client } } })
+    } catch (error) {
+      console.error(error)
+    }
+  }, [client, id, updateOrder])
+
+  const _handleDeleteOrder = useCallback(async () => {
+    const result = await Swal.fire({
+      title: '¿Deseas eliminar a esta pedido?',
+      text: "Esta acción no se puede deshacer",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText: 'No, Cancelar'
+    })
+
+    if (result.isConfirmed) {
+      try {
+        const { data: { deleteOrder: message } } = await deleteOrder({ variables: { id } })
+        Swal.fire(
+          'Eliminado!',
+          message,
+          'success'
+        )
+      } catch (error) {
+        Swal.fire(
+          'Error',
+          error.message,
+          'error'
+        )
+      }
+    }
+  }, [id, deleteOrder])
 
   return (
-    <div className="mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg">
+    <div className={`mt-4 bg-white rounded p-6 md:grid md:grid-cols-2 md:gap-4 shadow-lg border-t-4 ${classForCurrentStatus}`}>
       <div >
         <p className="font-bold text-gray-800">Cliente: {name} {lastName}</p>
         {email && (
@@ -34,7 +106,8 @@ const Order = ({
         <h2 className="text-gray-800 font-bold mt-10">Estado Pedido:</h2>
         <select
           className="mt-2 appearance-none bg-blue-600 border border-blue-600 text-white p-2 text-center rounded leading-tight focus:outline-none focus:bg-blue-600 focus:border-blue-500 uppercase text-xs"
-          value={status}
+          value={currentStatus}
+          onChange={_handleChangeStatus}
         >
           <option value="completed" >COMPLETADO</option>
           <option value="pending" >PENDIENTE</option>
@@ -60,6 +133,7 @@ const Order = ({
 
         <button
           className="uppercase text-xs font-bold flex items-center mt-4 bg-red-800 px-5 py-2 inline-block text-white rounded leading-tight"
+          onClick={_handleDeleteOrder}
         >
           Eliminar Pedido
           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
