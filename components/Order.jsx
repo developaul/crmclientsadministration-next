@@ -118,7 +118,7 @@ const Order = ({
       </div>
       <div>
         <h2 className="text-gray-800 font-bold mt-2">Resumen del pedido</h2>
-        {order.map(({ id, name, quantity }) => (
+        {order?.map(({ id, name, quantity }) => (
           <div
             className="mt-4"
             key={id}

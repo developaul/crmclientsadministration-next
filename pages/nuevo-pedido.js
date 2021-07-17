@@ -19,10 +19,21 @@ import {
 const NewOrder = () => {
   const router = useRouter()
   const [message, setMessage] = useState(null)
-  const [createOrder] = useMutation(MUTATION_CREATE_ORDER)
+  const [createOrder] = useMutation(MUTATION_CREATE_ORDER, {
+    update(cache, { data: { createOrder: order } }) {
+      const { getOrdersBySeller: orders } = cache.readQuery({ query: GET_ORDERS_BY_SELLER })
+      cache.writeQuery({
+        query: GET_ORDERS_BY_SELLER,
+        data: {
+          getOrdersBySeller: [...orders, order]
+        }
+      })
+    }
+  })
 
   const { isValidToRegisterOrder, products, client, total } = useContext(OrderContext)
 
+  console.log("🚀 ~ const_handleSanitizationOrder=useCallback ~ products", products)
   const _handleSanitizationOrder = useCallback(products => products.map(({ __typename, stock, ...product }) => {
     if (stock < product.quantity)
       throw new Error(`La cantidad del producto ${product.name} supera el stock disponible`)

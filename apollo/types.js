@@ -131,7 +131,7 @@ mutation updateProduct($id: ID!, $input: ProductInput) {
 `
 
 export const MUTATION_CREATE_ORDER = gql`
-mutation createOrder($input: clear!) {
+mutation createOrder($input: OrderInput!) {
   createOrder(input: $input) {
     id
     seller
