@@ -22,8 +22,8 @@ const Header = () => {
   const { name, lastName } = data.getUser
 
   return (
-    <header className="flex justify-between mb-6">
-      <p className="mr-2">Hola: {name} {lastName}</p>
+    <header className="sm:flex sm:justify-between mb-6">
+      <p className="mr-2 mb-5 lg:mb-0">Hola: {name} {lastName}</p>
       <button
         className="bg-blue-800 w-full sm:w-auto font-bold uppercase text-xs rounded text-white py-1 px-2 shadow-md"
         type="button"

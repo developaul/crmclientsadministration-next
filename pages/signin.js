@@ -24,8 +24,10 @@ const SignIn = () => {
 
       localStorage.setItem('accessToken', token)
 
-      setMessage(null)
-      router.replace('/')
+      setTimeout(() => {
+        setMessage(null)
+        router.replace('/')
+      }, 2000)
     } catch (error) {
       setMessage(error.message)
       setTimeout(() => setMessage(null), 3000)

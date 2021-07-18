@@ -24,21 +24,24 @@ const Products = () => {
           Nuevo Producto
         </a>
       </Link>
-      <table className="table-auto shadow-md mt-10 w-full w-lg">
-        <thead className="bg-gray-800">
-          <tr className="text-white">
-            <th className="w-1/5 py-2">Nombre</th>
-            <th className="w-1/5 py-2">Stock</th>
-            <th className="w-1/5 py-2">Precio</th>
-            <th className="w-1/5 py-2">Eliminar</th>
-            <th className="w-1/5 py-2">Editar</th>
-          </tr>
-        </thead>
 
-        <tbody className="bg-white">
-          {data.getProducts.map(product => <Product key={product.id} {...product} />)}
-        </tbody>
-      </table>
+      <div className="overflow-x-scroll">
+        <table className="table-auto shadow-md mt-10 w-full w-lg">
+          <thead className="bg-gray-800">
+            <tr className="text-white">
+              <th className="w-1/5 py-2">Nombre</th>
+              <th className="w-1/5 py-2">Stock</th>
+              <th className="w-1/5 py-2">Precio</th>
+              <th className="w-1/5 py-2">Eliminar</th>
+              <th className="w-1/5 py-2">Editar</th>
+            </tr>
+          </thead>
+
+          <tbody className="bg-white">
+            {data.getProducts.map(product => <Product key={product.id} {...product} />)}
+          </tbody>
+        </table>
+      </div>
     </Layout>
   )
 }
