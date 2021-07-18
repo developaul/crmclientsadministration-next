@@ -20,7 +20,7 @@ const Orders = () => {
         </a>
       </Link>
 
-      {data?.getOrdersBySeller?.length ? data?.getOrdersBySeller.map(order => <Order key={order.id} {...order} />) :
+      {data?.getOrdersBySeller?.length ? data?.getOrdersBySeller?.map(order => <Order key={order.id} {...order} />) :
         <p className="mmt-5 text-center text-2xl" >No hay pedido aún</p>
       }
     </Layout>

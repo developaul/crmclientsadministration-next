@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
@@ -6,12 +7,16 @@ import Layout from '../components/Layout'
 import { GET_BEST_SELLERS } from '../apollo/types';
 
 const BestSellers = () => {
-  const { data, loading } = useQuery(GET_BEST_SELLERS)
+  const { data, loading, startPolling, stopPolling } = useQuery(GET_BEST_SELLERS)
+
+  useEffect(() => {
+    startPolling(1000)
+    return () => stopPolling()
+  }, [startPolling, stopPolling])
 
   if (loading) return null
 
   const bestSellerSanitized = data?.getBestSellers?.map(({ seller, total }) => ({ ...seller, total }))
-  console.log("🚀 ~ BestSellers ~ bestSellerSanitized", bestSellerSanitized)
 
   return (
     <Layout>
