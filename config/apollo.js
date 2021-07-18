@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 
 const httpLink = createHttpLink({
   fetch,
-  uri: 'http://localhost:4000/'
+  uri: 'https://developaul-crmclients.herokuapp.com/'
 })
 
 const authLink = setContext((_, { headers }) => {
