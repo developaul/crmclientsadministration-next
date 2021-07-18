@@ -204,3 +204,15 @@ query getBestSellers {
   }
 }
 `
+
+export const GET_BEST_CLIENTS = gql`
+query getBestClients {
+  getBestClients {
+    total
+    client {
+      name
+      email
+    }
+  }
+}
+`
