@@ -192,3 +192,15 @@ mutation deleteOrder($id: ID!) {
   deleteOrder(id: $id)
 }
 `
+
+export const GET_BEST_SELLERS = gql`
+query getBestSellers {
+  getBestSellers {
+    total
+    seller {
+      name,
+      email
+    }
+  }
+}
+`
